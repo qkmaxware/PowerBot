@@ -10,8 +10,8 @@ using System.IO;
 namespace DiscordBot {
     
     class BotConfig {
-
-        public class Authentification {
+        public string commandPrefix = "$";
+        public class Authentication {
             public string token;
         }
 
@@ -39,7 +39,7 @@ namespace DiscordBot {
         /// <summary>
         /// Bot authentification settings
         /// </summary>
-        public Authentification authentification = new Authentification();
+        public Authentication authentication = new Authentication();
 
     }
 }

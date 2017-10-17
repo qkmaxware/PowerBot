@@ -12,14 +12,15 @@ namespace DiscordBot {
     class Bot {
 
         private DiscordSocketClient client;
+        private BotConfig config;
 
-        public Bot() {
+        public Bot(BotConfig config) {
             client = new DiscordSocketClient(new DiscordSocketConfig {
 
             });
 
             client.Log += Log;
-
+            this.config = config; 
         }
 
         private Task Log(LogMessage message) {
@@ -54,18 +55,20 @@ namespace DiscordBot {
                 return;
 
             //Check if the message is a command...if so do it
-
+            if (message.Content.StartsWith(config.commandPrefix)) {
+                await message.Channel.SendMessageAsync(message.Content);
+            }
         }
 
         private async Task InitBot() {
             client.MessageReceived += Read;
         }
 
-        public async Task Connect(string token) {
+        public async Task Connect() {
             await InitBot();
 
             //Login and connect
-            await client.LoginAsync(TokenType.Bot, token);
+            await client.LoginAsync(TokenType.Bot, config.authentication.token);
             await client.StartAsync();
 
             //Wait indefinitely
