@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using System.Web.Script.Serialization;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace FlatFileDatabase {
 
@@ -19,10 +20,14 @@ namespace FlatFileDatabase {
         }
 
         public Column[] columns;
-        public List<Row> rows;
+        public List<Row> rows = new List<Row>();
 
         public Table(params Column[] cols) {
             columns = cols;
+        }
+
+        public override string ToString() {
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
     }
 
@@ -34,15 +39,18 @@ namespace FlatFileDatabase {
 
         private static JavaScriptSerializer serializer = new JavaScriptSerializer();
 
+        private Database() { }
+
         private Database(string file) {
             this.file = file;
         }
 
         public static Database Create(string file) {
-            Database db;
+            Database db = null;
             if (File.Exists(file)) {
                 string json = string.Join("\n", File.ReadAllLines(file));
-                db = serializer.Deserialize<Database>(json);
+                db = JsonConvert.DeserializeObject<Database>(json);
+                db.file = file;
             }
             else {
                 db = new Database(file);
@@ -52,18 +60,25 @@ namespace FlatFileDatabase {
         }
 
         public void Save() {
-            string json = serializer.Serialize(this);
+            string json = JsonConvert.SerializeObject(this, Formatting.Indented);
             File.WriteAllLines(file, new string[] { json });
         }
 
-        public void Query(Query query) {
+        public Table Query(Query query) {
+            Table t = null;
             lock (lockAndKey) {
-                Table src = ObtainSrc(query);
+                t = query.Operate(this);
+                this.Save();
             }
+            return t;
         }
 
-        private Table ObtainSrc(Query query) {
-            return null;
+        public void AddTable(string name, Table t) {
+            tables[name] = t;
+        }
+
+        public void RemoveTable(string name) {
+            tables.Remove(name);
         }
     }
 }
