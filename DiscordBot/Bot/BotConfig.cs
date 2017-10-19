@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.IO;
 
-namespace DiscordBot {
+namespace DiscordBot.Bot {
     
     class BotConfig {
         public string commandPrefix = "$";
