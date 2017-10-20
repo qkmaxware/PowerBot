@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using DiscordBot.Bot;
-using SimpleWebServer;
+using SimpleWebServer.SpecialWebPages;
 using FlatFileDatabase;
 
 namespace DiscordBot {
@@ -41,27 +41,43 @@ namespace DiscordBot {
         /// Run bot components in debug mode
         /// </summary>
         static void Debug() {
+            //Print header
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine("PowerBot 2016. Press esc at any point to halt program.");
+            Console.WriteLine("----------------------------------------\n");
+
             //Create default JSON
-            BotConfig config = BotConfig.Deserialize("configRef");
+            BotConfig config = BotConfig.Deserialize(configRef);
 
             //Create the Database
             FlatFileDatabase.Database db = Database.Create("db.json");
 
-            //Create the bot
-            Bot.Bot bot = new Bot.Bot(config);
+            //Create the logger
+            Logger logger = new Logger();
 
             //Initialize the webserver
-            SimpleWebServer.WebServer web = new SimpleWebServer.WebServer();
-            SimpleWebServer.WebPage index = new SimpleWebServer.WebPage("Testing 1,2,3");
+            SimpleWebServer.WebServer web = new SimpleWebServer.WebServer(logger);
+            TemplateWebPage index = new TemplateWebPage("Web/index.html");
+            ApiCallPage api = new ApiCallPage((args) => {
+                return "{\"message\":\"Call recieved\"}";
+            });
             web.AddPage("index", index);
+            web.AddPage("rest", api);
 
             web.Start();
+
+            //Create the bot
+            Bot.Bot bot = new Bot.Bot(config, logger);
+
+            //Install the mods
+            //Default mods first
+            Bot.DefaultModules.EchoModule echo = new Bot.DefaultModules.EchoModule();
+            bot.ReInstall(echo);
 
             //Listen asynchronously
             Task t = bot.Connect(); //.GetAwaiter().GetResult();
 
             //Wait until told otherwise
-            Console.WriteLine("A Simple Web Server. Press esc to stop.");
             while (true) {
                 if (Console.ReadKey().Key == ConsoleKey.Escape)
                     break;

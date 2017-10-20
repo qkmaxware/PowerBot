@@ -14,6 +14,8 @@ namespace DiscordBot.Bot {
         private Dictionary<xtype, List<KeyValuePair<IModule, Modules.ICommand>>> commands = new Dictionary<xtype, List<KeyValuePair<IModule, Modules.ICommand>>>();
 
         public void Install(IModule mod) {
+            if (modules.Contains(mod))
+                return;
             modules.Add(mod);
             foreach (ICommand c in mod.GetCommands()) {
                 if (commands.ContainsKey(c.GetName())) {

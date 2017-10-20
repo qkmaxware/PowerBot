@@ -5,5 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DiscordBot.Bot.Modules {
-    class ICommandContext {}
+    interface ICommandContext {
+        string GetMessage();
+        void ReplyToChannel(string msg);
+        void ReplyToUser(string msg);
+    }
 }

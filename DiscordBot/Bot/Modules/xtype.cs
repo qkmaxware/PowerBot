@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace DiscordBot.Bot.Modules {
     class xtype {
-        private static Regex rules = new Regex("[a-z]+");
+        private static Regex rules = new Regex("[a-zA-Z\\-]+");
 
         public string Value {
             get;

@@ -83,6 +83,9 @@
     <Compile Include="Bot\Bot.cs" />
     <Compile Include="Bot\BotConfig.cs" />
     <Compile Include="Bot\CommandMatrix.cs" />
+    <Compile Include="Bot\DefaultCommandContext.cs" />
+    <Compile Include="Bot\DefaultModules\EchoModule.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Bot\Modules\ICommand.cs" />
     <Compile Include="Bot\Modules\ICommandContext.cs" />
     <Compile Include="Bot\Modules\IModule.cs" />
@@ -92,6 +95,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FlatFileDB\Query.cs" />
     <Compile Include="FlatFileDB\QueryCompiler.cs" />
+    <Compile Include="WebServer\SpecialWebPages\ApiCall.cs" />
+    <Compile Include="WebServer\SpecialWebPages\TemplateWebPage.cs" />
     <Compile Include="WebServer\WebPage.cs" />
     <Compile Include="WebServer\WebServer.cs" />
   </ItemGroup>

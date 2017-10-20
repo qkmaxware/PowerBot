@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Threading;
 
+using System.Text.RegularExpressions;
 
 namespace SimpleWebServer {
     class WebServer {
@@ -14,13 +15,18 @@ namespace SimpleWebServer {
         private Dictionary<string, WebPage> pages = new Dictionary<string, WebPage>();
         private WebPage notFoundPage = new WebPage("<h1>404: Page Not Found</h1> This page does not exist on this server");
 
-        public WebServer(string prefix = "http://localhost", uint port = 8080, WebPage index = null) {
+        private static Regex parameters = new Regex("\\?(.+?=[^&]+)(?:&(.+?=[^&]+))*$");
+        private DiscordBot.Logger logger;
+
+        public WebServer(DiscordBot.Logger logger, string prefix = "http://localhost", uint port = 8080, WebPage index = null) {
             if (!HttpListener.IsSupported)
                 throw new NotSupportedException("Needs Windows XP SP2, Server 2003 or later.");
 
             string url = prefix + ":" + port + "/";
 
             listener.Prefixes.Add(url);
+
+            this.logger = logger;
 
             if (index != null)
                 AddPage("index", index);
@@ -38,22 +44,30 @@ namespace SimpleWebServer {
             listener.Start();
 
             ThreadPool.QueueUserWorkItem((o) => {
-                Console.WriteLine("Webserver running...");
-
+                logger.Log("WebServer", "started");
                 try {
                     while (listener.IsListening) {
                         ThreadPool.QueueUserWorkItem((c) => {
                             HttpListenerContext ctx = c as HttpListenerContext;
                             try {
                                 //Get the page path
-                                string path = ctx.Request.Url.LocalPath.Trim().Remove(0,1);
+                                string local = ctx.Request.Url.LocalPath.Trim().Remove(0,1);
+                                string path = parameters.Replace(local, "").Trim();
                                 if (path == string.Empty)
                                     path = "index";
+
+                                //Get the parameters as key value pairs
+                                List<KeyValuePair<string, string>> p = new List<KeyValuePair<string, string>>();
+                                foreach (Match match in parameters.Matches(local)) {
+                                    string[] split = match.Value.Split('=');
+                                    if (split.Length == 2)
+                                        p.Add(new KeyValuePair<string, string>(split[0].Trim(), split[1].Trim()));
+                                }
 
                                 //Get the response message
                                 string response = this.notFoundPage.GetContent();
                                 if (pages.ContainsKey(path)) {
-                                    response = pages[path].GetContent();
+                                    response = pages[path].GetContent(p.ToArray());
                                 }
 
                                 //Send the message
@@ -71,8 +85,7 @@ namespace SimpleWebServer {
                 catch (Exception e) {
 
                 }
-
-                Console.WriteLine("Webserver terminated");
+                logger.Log("WebServer", "terminated");
             });
         }
 

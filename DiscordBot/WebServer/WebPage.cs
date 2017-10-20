@@ -18,7 +18,7 @@ namespace SimpleWebServer {
             return new WebPage(string.Join("\n", File.ReadAllLines(url)));
         }
 
-        public virtual string GetContent(params string[] param) {
+        public virtual string GetContent(params KeyValuePair<string,string>[] param) {
             return template;
         }
 

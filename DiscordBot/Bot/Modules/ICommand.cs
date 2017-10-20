@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace DiscordBot.Bot.Modules {
     interface ICommand {
         xtype GetName();
+        string GetHelp();
         void Run(ICommandContext ctx);
     }
 }
