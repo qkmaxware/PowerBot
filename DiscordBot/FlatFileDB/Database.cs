@@ -59,6 +59,14 @@ namespace FlatFileDatabase {
             return db;
         }
 
+        public bool IsEmpty() {
+            return this.tables.Count == 0;
+        }
+
+        public int CountTables() {
+            return this.tables.Count;
+        }
+
         public void Save() {
             string json = JsonConvert.SerializeObject(this, Formatting.Indented);
             File.WriteAllLines(file, new string[] { json });

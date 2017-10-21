@@ -11,6 +11,8 @@ namespace ModuleCore.Modules {
         long GetUid();
         string GetAuthor();
         string GetDescription();
+
+        IScheduledTask[] GetScheduledEvents();
         ICommand[] GetCommands();
 
     }

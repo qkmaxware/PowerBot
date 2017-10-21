@@ -85,9 +85,12 @@
   <ItemGroup>
     <Compile Include="Bot\Bot.cs" />
     <Compile Include="Bot\BotConfig.cs" />
-    <Compile Include="Bot\CommandMatrix.cs" />
+    <Compile Include="Bot\DefaultModules\TaskModule.cs" />
+    <Compile Include="Bot\ModuleInstallInfo.cs" />
+    <Compile Include="Bot\ModuleOperationsMatrix.cs" />
     <Compile Include="Bot\DefaultCommandContext.cs" />
     <Compile Include="Bot\DefaultModules\EchoModule.cs" />
+    <Compile Include="Bot\Scheduler.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="FlatFileDB\Database.cs" />
     <Compile Include="Program.cs" />

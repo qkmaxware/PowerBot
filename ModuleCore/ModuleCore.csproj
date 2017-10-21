@@ -43,6 +43,7 @@
     <Compile Include="Modules\ICommand.cs" />
     <Compile Include="Modules\ICommandContext.cs" />
     <Compile Include="Modules\IModule.cs" />
+    <Compile Include="Modules\IScheduledTask.cs" />
     <Compile Include="Modules\xtype.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

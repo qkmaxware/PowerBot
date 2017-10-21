@@ -37,6 +37,10 @@ namespace DiscordBot.Bot.DefaultModules {
             return author;
         }
 
+        public IScheduledTask[] GetScheduledEvents() {
+            return new IScheduledTask[0];
+        }
+
         public ICommand[] GetCommands() {
             return cmds;
         }

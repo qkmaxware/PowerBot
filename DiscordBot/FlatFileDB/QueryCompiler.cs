@@ -48,7 +48,9 @@ namespace FlatFileDatabase {
             public void Restore(int i) {
                 index = i;
             }
-
+            public int Count() {
+                return matches.Length - index;
+            }
             public bool IsNext(Token tok) {
                 return (index < matches.Length && matches[index].token == tok);
             }
@@ -563,9 +565,10 @@ namespace FlatFileDatabase {
                 ValueExpression v = new ValueExpression();
                 v.value = q.Peek().value.Remove(0,1);
                 v.value = v.value.Remove(v.value.Length - 1);
+                q.Pop();
                 return v;
             }
-            
+
             return null;
         }
     }

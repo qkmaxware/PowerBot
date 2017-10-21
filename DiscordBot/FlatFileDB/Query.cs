@@ -96,7 +96,9 @@ namespace FlatFileDatabase {
         public override Table Operate(Database db) {
             Table src = source.Value(db);
             Table.Row row = new Table.Row();
-            for (int i = 0; i < fields.Length; i++) {
+            if (fields.Length != exp.Length)
+                throw new Exception("Missing values for insertion query");
+            for (int i = 0; i < Math.Min(fields.Length, exp.Length); i++) {
                 row.values[fields[i]] = (exp[i].Evaluate(row));
             }
             src.rows.Add(row);

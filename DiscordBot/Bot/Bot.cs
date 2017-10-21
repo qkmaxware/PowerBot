@@ -12,26 +12,19 @@ namespace DiscordBot.Bot {
 
         private DiscordSocketClient client;
         private BotConfig config;
-        private CommandMatrix commands = new CommandMatrix();
+        public readonly ModuleOperationsMatrix modManager = new ModuleOperationsMatrix();
 
-        private static Regex firstWordOnly = new Regex("^.+\\s");
-        private static Logger logger;
+        private static Regex firstWordOnly = new Regex("^.+?(?:\\s|$)");
+        private Logger logger;
 
         public Bot(BotConfig config, Logger logger) {
             client = new DiscordSocketClient(new DiscordSocketConfig {
 
             });
 
+            this.logger = logger;
             client.Log += logger.Log;
             this.config = config; 
-        }
-
-        public string[] GetInstalledMods() {
-            return commands.getInstalled();
-        }
-
-        public void ReInstall(ModuleCore.Modules.IModule mod) {
-            commands.Install(mod);
         }
 
         private async Task Read(SocketMessage msg) {
@@ -49,11 +42,13 @@ namespace DiscordBot.Bot {
                     string m = message.Content.Substring(config.commandPrefix.Length);
 
                     string first = firstWordOnly.Match(m).Value.Trim();
-                    string remainder = firstWordOnly.Replace(m, "");
+                    string remainder = firstWordOnly.Replace(m, "").Trim();
+                    //For $event-ls this is wrong, it returns an empty cmd and the cmd on remainder
+
                     if (first.Length != 0) {
                         //Define context variables (sender ect)
-                        DefaultCommandContext ctx = new DefaultCommandContext(msg.Author, msg.Channel, remainder);
-                        
+                        DefaultCommandContext ctx = new DefaultCommandContext(msg, remainder);
+
                         //Get the mod.name
                         string[] parts = first.Split('.');
                         string mod = null;
@@ -62,8 +57,10 @@ namespace DiscordBot.Bot {
                             mod = func;
                             func = string.Join(".", parts.Skip(1));
                         }
+
                         List<KeyValuePair<ModuleCore.Modules.IModule, ModuleCore.Modules.ICommand>> cmds;
-                        commands.GetCommand(out cmds, ModuleCore.Modules.xtype.Register(func));
+                        ModuleCore.Modules.xtype function = ModuleCore.Modules.xtype.Register(func);
+                        modManager.GetCommand(out cmds, function);
 
                         //No command
                         if (cmds == null || cmds.Count == 0) {
@@ -109,6 +106,7 @@ namespace DiscordBot.Bot {
                 }
                 catch (Exception e) {
                     //Something unexpected occurred
+                    logger.Log("Bot",e.ToString());
                 }
             }
         }

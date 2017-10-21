@@ -61,18 +61,19 @@ namespace DiscordBot {
             //Install the mods
             //Default mods first
             Bot.DefaultModules.EchoModule echo = new Bot.DefaultModules.EchoModule();
-            bot.ReInstall(echo);
+            bot.modManager.Install(echo);
+            Bot.DefaultModules.TaskModule taskmgr = new Bot.DefaultModules.TaskModule();
+            bot.modManager.Install(taskmgr);
 
             //Initialize the webserver
             SimpleWebServer.WebServer web = new SimpleWebServer.WebServer(logger, "http://localhost", 8081);
             TemplateWebPage index = new TemplateWebPage("Web/index.html");
             index.SetReplacementMethod((string val) => {
                 if (val == "modules") {
-                    string[] mods = bot.GetInstalledMods();
+                    ModuleInstallInfo[] mods = bot.modManager.getInstalled();
                     string[] replace = new string[mods.Length];
                     for (int i = 0; i < mods.Length; i++) {
-                        string[] split = mods[i].Split('#');
-                        string s = "{name:\"" + split[0] + "\",uid:" + split[1] + "}";
+                        string s = "{name:\"" + mods[i].name + "\",uid:" + mods[i].uid + ",enabled:"+(mods[i].enabled ? "true" : "false")+"}";
                         replace[i] = s;
                     }
                     return string.Join(",", replace);
@@ -83,9 +84,32 @@ namespace DiscordBot {
             });
             ApiCallPage api = new ApiCallPage((args) => {
                 if (!args.ContainsKey("func"))
-                    return "{error:true, message:\"No function supplied\"}";
+                    return "{\"error\":true, \"message\":\"No function supplied\"}";
 
-                return "{\"message\":\"Call recieved\"}";
+                string op = args["func"];
+                switch (op) {
+                    case "toggleMods":
+                        ModuleInstallInfo[] mods = bot.modManager.getInstalled();
+                        bool success = true;
+                        foreach (ModuleInstallInfo info in mods) {
+                            string modid = info.identity;
+                            if (!args.ContainsKey(modid))
+                                continue;
+                            string enabler = args[modid];
+                            bool isEnabled;
+                            bool parsed = bool.TryParse(enabler, out isEnabled);
+                            if (parsed) {
+                                bot.modManager.Enable(info.name, info.uid, isEnabled);
+                            }
+                            else {
+                                success = false;
+                            }
+                        }
+                        return "{\"error\":"+success+", \"message\":\""+(success ? "All mods have been updated." : "An error occured, some mods may not have been updated.")+"\"}";
+                    default:
+                        return "{\"error\":true, \"message\":\"This function does not exist.\"}";
+                }
+                return "{\"error\":true, \"message\":\"This function does not exist.\"}";
             });
             web.AddPage("index", index);
             web.AddPage("rest", api);

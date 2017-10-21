@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 using ModuleCore.Modules;
 
 namespace DiscordBot.Bot {
-    class CommandMatrix {
+    class ModuleOperationsMatrix {
 
         private Dictionary<string, IModule> modules = new Dictionary<string, IModule>();
         private HashSet<IModule> disabledModules = new HashSet<IModule>();
         private Dictionary<xtype, List<KeyValuePair<IModule, ICommand>>> commands = new Dictionary<xtype, List<KeyValuePair<IModule, ICommand>>>();
+        private Scheduler scheduler = new Scheduler();
 
         public void Install(IModule mod) {
             string modid = mod.GetModuleName().Value + "#" + mod.GetUid();
@@ -37,13 +38,29 @@ namespace DiscordBot.Bot {
             }
         }
 
-        public string[] getInstalled() {
-            string[] ids = new string[this.modules.Count];
+        public ModuleInstallInfo[] getInstalled() {
+            ModuleInstallInfo[] ids = new ModuleInstallInfo[this.modules.Count];
             int i = 0;
-            foreach (string name in this.modules.Keys) {
-                ids[i++] = name;
+            foreach (IModule mod in this.modules.Values) {
+                ModuleInstallInfo info = new ModuleInstallInfo();
+                info.module = mod;
+                info.name = mod.GetModuleName().Value;
+                info.uid = mod.GetUid();
+                info.enabled = !this.disabledModules.Contains(mod);
+                ids[i++] = info;
             }
             return ids;
+        }
+
+        public void Enable(string name, long id, bool enable) {
+            string modid = name + "#" + id;
+            if (modules.ContainsKey(modid)) {
+                IModule mod = modules[modid];
+                if (enable)
+                    this.disabledModules.Remove(mod);
+                else
+                    this.disabledModules.Add(mod);
+            }
         }
 
         public void Enable(IModule mod, bool enable) {

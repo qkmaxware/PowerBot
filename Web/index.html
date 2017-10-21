@@ -1,0 +1,174 @@
+<html>
+   <head>
+      <style>
+         /* The switch - the box around the slider */
+         .switch {
+         position: relative;
+         display: inline-block;
+         width: 60px;
+         height: 34px;
+         }
+         /* Hide default HTML checkbox */
+         .switch input {display:none;}
+         /* The slider */
+         .slider {
+         position: absolute;
+         cursor: pointer;
+         top: 0;
+         left: 0;
+         right: 0;
+         bottom: 0;
+         background-color: #ccc;
+         -webkit-transition: .4s;
+         transition: .4s;
+         }
+         .slider:before {
+         position: absolute;
+         content: "";
+         height: 26px;
+         width: 26px;
+         left: 4px;
+         bottom: 4px;
+         background-color: white;
+         -webkit-transition: .4s;
+         transition: .4s;
+         }
+         input:checked + .slider {
+         background-color: #2196F3;
+         }
+         input:focus + .slider {
+         box-shadow: 0 0 1px #2196F3;
+         }
+         input:checked + .slider:before {
+         -webkit-transform: translateX(26px);
+         -ms-transform: translateX(26px);
+         transform: translateX(26px);
+         }
+         /* Rounded sliders */
+         .slider.round {
+         border-radius: 34px;
+         }
+         .slider.round:before {
+         border-radius: 50%;
+         }
+         /*Table classes*/
+         .tbl {
+         width:100%;
+         }
+         .tdl, thl {
+         border-bottom: 1px solid #dddddd;
+         text-align: left;
+         padding: 8px;
+         }
+         /*Fancy buttons*/
+         .confirm-button{
+         font-size: 120%;
+         color: white;
+         background-color: #2196F3;
+         border: none;
+         text-align: center;
+         text-decoration: none;
+         display: inline-block;
+         padding: 10px 24px;
+         border-radius: 8px;
+         cursor: pointer;
+         transition: all 0.5s;
+         }
+         .confirm-button:hover {
+         background-color: #0055FF;
+         }
+         /*Header Sized Font*/
+         .large {
+         font-size: 200%;
+         }
+         .jumbotron {
+         color: white;
+         background-color: #383838;
+         padding: 20px;
+         vertical-align: middle;
+         }
+      </style>
+   </head>
+   <body>
+      <table class="jumbotron large" style="height: 80; width: 100%;">
+         <tr>
+            <td>
+               PowerBot
+            </td>
+         </tr>
+      </table>
+      <div class="jumbotron" style="height: 25; background-color: #2196F3; padding:0px;"></div>
+      <p style="padding: 50px;">
+      <table id="modlist" class="tbl">
+      </table>
+      </p>
+      <p style="padding-left: 50px; padding-right: 50px;">
+         <button class="confirm-button" style="float:left;" onclick="submitModuleChanges()">
+         Save Changes
+         </button>
+      </p>
+   </body>
+   <script>
+      var modules = [{{modules}}];
+       
+      var module_row_tpl = `<tr class="trl">
+                                      <td class="tdl">
+                                                      <font class="large">
+                                                                      *Name*
+                                                      </font>
+                                                      #*id*
+                                      </td>
+                                      <td class="tdl">
+                                                      <!-- Rounded switch -->
+                                                      <label class="switch" style="float:left;">
+                                                        <input id="moduleToggle:*intval*" type="checkbox" *checked*>
+                                                        <span class="slider round"></span>
+                                                      </label>
+                                      </td>
+                      </tr>`;
+       
+      for(var i = 0; i < modules.length; i++){
+                      console.log("here");
+                      addModuleRow(modules[i], i);
+      }
+       
+		function ajax(config){
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					if(config.complete)
+						config.complete();
+				}
+			};
+			xhttp.open("GET", config.url, true);
+			xhttp.send();
+		}
+	   
+      function addModuleRow(mod, id){
+                      var edit = module_row_tpl
+						.replace("*Name*", mod.name)
+						.replace("*id*", mod.uid)
+						.replace("*checked*", (mod.enabled?"checked":""))
+						.replace("*intval*", id);
+                      document.getElementById("modlist").innerHTML += edit;
+      }
+                      
+      function submitModuleChanges(){
+		var paramstring = "func=toggleMods"; var first = true;
+		for(var i = 0; i < modules.length; i++){
+			var checkbox = document.getElementById("moduleToggle:"+i);
+			var value = checkbox.value;
+			var module = modules[i].name+"#"+modules[i].uid;
+			paramstring += "&", + module +"="+value
+			first = false;
+		}
+		ajax({
+			url: '/rest?'+paramstring,
+			complete:function(){
+				alert("AJAX came back");
+			}
+		})
+      }
+       
+   </script>
+</html>

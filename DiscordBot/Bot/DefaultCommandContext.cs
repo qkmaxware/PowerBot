@@ -8,25 +8,31 @@ using Discord.WebSocket;
 namespace DiscordBot.Bot {
     class DefaultCommandContext : ModuleCore.Modules.ICommandContext {
         private string msg;
-        private SocketUser sender;
-        private ISocketMessageChannel channel;
+        private SocketMessage socket;
 
-        public DefaultCommandContext(SocketUser sender, ISocketMessageChannel channel, string msg) {
+        public DefaultCommandContext(SocketMessage socket, string msg) {
             this.msg = msg;
-            this.sender = sender;
-            this.channel = channel;
+            this.socket = socket;
         }
 
         public string GetMessage() {
             return msg;
         }
 
+        public string GetSenderName() {
+            return this.socket.Author.Username;
+        }
+
+        public string GetSenderId() {
+            return ""+this.socket.Author.Id;
+        }
+
         public void ReplyToChannel(string msg) {
-            channel.SendMessageAsync(msg);
+            this.socket.Channel.SendMessageAsync(msg);
         }
 
         public void ReplyToUser(string msg) {
-            sender.GetOrCreateDMChannelAsync().GetAwaiter().GetResult().SendMessageAsync(msg);
+            this.socket.Author.GetOrCreateDMChannelAsync().GetAwaiter().GetResult().SendMessageAsync(msg);
         }
     }
 }
