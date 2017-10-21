@@ -52,16 +52,19 @@ namespace SimpleWebServer {
                             try {
                                 //Get the page path
                                 string local = ctx.Request.Url.LocalPath.Trim().Remove(0,1);
-                                string path = parameters.Replace(local, "").Trim();
+                                string qry = ctx.Request.Url.Query;
+                                string path = local;
                                 if (path == string.Empty)
                                     path = "index";
 
                                 //Get the parameters as key value pairs
                                 List<KeyValuePair<string, string>> p = new List<KeyValuePair<string, string>>();
-                                foreach (Match match in parameters.Matches(local)) {
-                                    string[] split = match.Value.Split('=');
-                                    if (split.Length == 2)
-                                        p.Add(new KeyValuePair<string, string>(split[0].Trim(), split[1].Trim()));
+                                foreach (Match match in parameters.Matches(qry)) {
+                                    for (int i = 1; i < match.Groups.Count; i++) {
+                                        string[] split = match.Groups[i].Value.Split('=');
+                                        if (split.Length == 2)
+                                            p.Add(new KeyValuePair<string, string>(split[0].Trim(), split[1].Trim()));
+                                    }
                                 }
 
                                 //Get the response message

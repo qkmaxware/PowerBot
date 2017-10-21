@@ -57,6 +57,9 @@
       <HintPath>..\packages\Discord.Net.WebSocket.1.0.2\lib\net45\Discord.Net.WebSocket.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ModuleCore">
+      <HintPath>..\ModuleCore\bin\Debug\ModuleCore.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -86,10 +89,6 @@
     <Compile Include="Bot\DefaultCommandContext.cs" />
     <Compile Include="Bot\DefaultModules\EchoModule.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="Bot\Modules\ICommand.cs" />
-    <Compile Include="Bot\Modules\ICommandContext.cs" />
-    <Compile Include="Bot\Modules\IModule.cs" />
-    <Compile Include="Bot\Modules\xtype.cs" />
     <Compile Include="FlatFileDB\Database.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

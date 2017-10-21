@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Discord.WebSocket;
 
 namespace DiscordBot.Bot {
-    class DefaultCommandContext : Modules.ICommandContext {
+    class DefaultCommandContext : ModuleCore.Modules.ICommandContext {
         private string msg;
         private SocketUser sender;
         private ISocketMessageChannel channel;

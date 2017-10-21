@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Discord;
@@ -27,7 +26,11 @@ namespace DiscordBot.Bot {
             this.config = config; 
         }
 
-        public void ReInstall(Modules.IModule mod) {
+        public string[] GetInstalledMods() {
+            return commands.getInstalled();
+        }
+
+        public void ReInstall(ModuleCore.Modules.IModule mod) {
             commands.Install(mod);
         }
 
@@ -59,8 +62,8 @@ namespace DiscordBot.Bot {
                             mod = func;
                             func = string.Join(".", parts.Skip(1));
                         }
-                        List<KeyValuePair<Modules.IModule, Modules.ICommand>> cmds;
-                        commands.GetCommand(out cmds, Modules.xtype.Register(func));
+                        List<KeyValuePair<ModuleCore.Modules.IModule, ModuleCore.Modules.ICommand>> cmds;
+                        commands.GetCommand(out cmds, ModuleCore.Modules.xtype.Register(func));
 
                         //No command
                         if (cmds == null || cmds.Count == 0) {
@@ -68,12 +71,12 @@ namespace DiscordBot.Bot {
                         }
 
                         //Obtain the command
-                        Modules.ICommand cmd = null;
+                        ModuleCore.Modules.ICommand cmd = null;
                         if (cmds.Count > 1) {
                             //Multiple commands, Match module
                             if (mod != null) {
-                                Modules.ICommand c = null;
-                                foreach (KeyValuePair<Modules.IModule, Modules.ICommand> p in cmds) {
+                                ModuleCore.Modules.ICommand c = null;
+                                foreach (KeyValuePair<ModuleCore.Modules.IModule, ModuleCore.Modules.ICommand> p in cmds) {
                                     if (p.Key.GetModuleName().Value == mod) {
                                         c = p.Value;
                                         break;

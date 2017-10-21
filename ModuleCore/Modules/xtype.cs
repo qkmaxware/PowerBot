@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 using System.Text.RegularExpressions;
 
-namespace DiscordBot.Bot.Modules {
-    class xtype {
+namespace ModuleCore.Modules {
+    public sealed class xtype {
         private static Regex rules = new Regex("[a-zA-Z\\-]+");
 
         public string Value {

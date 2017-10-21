@@ -22,3 +22,5 @@ c:\users\colin halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordB
 c:\users\colin halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\bin\Debug\System.Interactive.Async.xml
 c:\users\colin halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\obj\Debug\DiscordBot.exe
 c:\users\colin halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\obj\Debug\DiscordBot.pdb
+C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\bin\Debug\ModuleCore.dll
+C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\bin\Debug\ModuleCore.pdb

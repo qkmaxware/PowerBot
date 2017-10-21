@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiscordBot.Bot.Modules {
-    interface ICommandContext {
+namespace ModuleCore.Modules {
+    public interface ICommandContext {
         string GetMessage();
         void ReplyToChannel(string msg);
         void ReplyToUser(string msg);

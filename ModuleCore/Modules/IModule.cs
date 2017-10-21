@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiscordBot.Bot.Modules {
-    interface IModule {
+namespace ModuleCore.Modules {
+    public interface IModule {
 
         xtype GetModuleName();
         long GetUid();

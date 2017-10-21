@@ -1,0 +1,5 @@
+C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\ModuleCore\bin\Debug\ModuleCore.dll
+C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\ModuleCore\bin\Debug\ModuleCore.pdb
+C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\ModuleCore\obj\Debug\ModuleCore.csprojResolveAssemblyReference.cache
+C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\ModuleCore\obj\Debug\ModuleCore.dll
+C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\ModuleCore\obj\Debug\ModuleCore.pdb

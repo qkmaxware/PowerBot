@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using DiscordBot.Bot.Modules;
+using ModuleCore.Modules;
 
 namespace DiscordBot.Bot.DefaultModules {
     class EchoModule : IModule {
