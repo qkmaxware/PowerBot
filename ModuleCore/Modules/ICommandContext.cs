@@ -9,6 +9,7 @@ namespace ModuleCore.Modules {
         string GetMessage();
         string GetSenderName();
         string GetSenderId();
+        string GetSenderMeantion();
         void ReplyToChannel(string msg);
         void ReplyToUser(string msg);
     }

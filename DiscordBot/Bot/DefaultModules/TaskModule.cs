@@ -78,7 +78,7 @@ namespace DiscordBot.Bot.DefaultModules {
                     string scheduledTime = "Na";
                     Query add = Query.Compile("INSERT INTO tasks (uid, creation, time, event) VALUES '"+uid+"', "+now+", '"+scheduledTime+"', '"+ctx.GetMessage()+"'");
                     db.Query(add);
-                    ctx.ReplyToChannel("@"+ctx.GetSenderName()+" your task has be scheduled");
+                    ctx.ReplyToChannel(ctx.GetSenderMeantion()+" your task has be scheduled");
                 }),
                 new Command("event-rm", (ctx) => {
 
@@ -87,7 +87,7 @@ namespace DiscordBot.Bot.DefaultModules {
                     string uid = ctx.GetSenderId();
                     Query select = Query.Compile("SELECT time, event FROM tasks WHERE uid = '"+uid+"'");
                     Table t = db.Query(select);
-                    string send = "@"+ctx.GetSenderName()+" your tasks include: \n";
+                    string send = ctx.GetSenderMeantion()+" your tasks include: \n";
                     foreach (Table.Row row in t.rows) {
                         send += row.values["time"]+": "+row.values["event"]+",\n";
                     }

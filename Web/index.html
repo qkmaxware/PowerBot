@@ -75,7 +75,7 @@
          transition: all 0.5s;
          }
          .confirm-button:hover {
-         background-color: #0055FF;
+         background-color: #9ed1fa;
          }
          /*Header Sized Font*/
          .large {
@@ -87,6 +87,56 @@
          padding: 20px;
          vertical-align: middle;
          }
+		 .infobubble {
+		 background-color: #2196F3;
+		 display: table;
+		 text-align: center;
+		 vertical-align: middle;
+		 border-radius: 50%;
+		 cursor: pointer;
+		 }
+		 .infobubble-content{
+		 display: table-cell;
+		 vertical-align: middle;
+		 text-align: center;
+		 color:white;
+		 cursor: pointer;
+		 }
+		 .infobubble:hover {
+		 background-color: #9ed1fa;
+		 color: white;
+		 border-radius: 50%;
+		 }
+		 .popup{
+		 border-radius:15px;
+		 padding: 12px;
+		 overflow: auto;
+		 background-color: f7f7f7;
+		 left: 50;
+		 right: 50;
+		 top: 50;
+		 bottom: 50;
+		 position: absolute;
+		 }
+		 .modal{
+		 background-color: black;
+		 opacity: 0.5;
+		 left:0;
+		 right:0;
+		 top:0;
+		 bottom:0;
+		 position: absolute;
+		 }
+		 .hidden{
+		 display:none;
+		 }
+		 .footer{
+		 padding: 12px;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+		 }
       </style>
    </head>
    <body>
@@ -107,12 +157,45 @@
          Save Changes
          </button>
       </p>
+	  
+	  <div class="hidden" id="hidden">
+		  <div class="modal">
+		  </div>
+		  <div class="popup">
+			<font class="large">
+			<div id="popup.ModName" style="display:inline-block">{{Mod Name}}</div>
+			</font>
+			<div id="popup.ModId" style="display:inline-block">
+			#{{Mod id}}
+			</div>
+			<br>
+			<div id="popup.ModBy">
+			Author: {{Mod author}}
+			</div>
+			<hr>
+			<div id="popup.ModDesc" style = "overflow:auto">
+			{{Mod desc}}
+			</div>
+			<div class="footer">
+			<hr>
+			<button class="confirm-button" style="float:right;" onclick="showPopop(false)">
+			Close
+			</button>
+			</div>
+		  </div>
+	  </div>
    </body>
    <script>
-      var modules = [{{modules}}];
+      var modules = [{name:"mod", uid:1}/*{{modules}}*/];
        
       var module_row_tpl = `<tr class="trl">
+										<td class="tdl" style="width:20px">
+										<div class="infobubble" style="width:25px;height:25px" onclick="getModInfo(*intval*)">
+											<div class="infobubble-content">i</div>
+										</div>
+										</td>
                                       <td class="tdl">
+														
                                                       <font class="large">
                                                                       *Name*
                                                       </font>
@@ -169,6 +252,25 @@
 			}
 		})
       }
+	  
+	  function getModInfo(intid){
+		var mod = modules[intid];
+		document.getElementById("popup.ModName").innerHTML = mod.name;
+		document.getElementById("popup.ModId").innerHTML = "#" + mod.uid;
+		document.getElementById("popup.ModBy").innerHTML = "Author: " + "{{Mod Author}}";
+		document.getElementById("popup.ModDesc").innerHTML = "{{Mod Desc}}";
+		showPopop(true);
+	  }
+
+	  function showPopop(show){
+		var popup = document.getElementById("hidden");
+		if(show){
+			popup.style.display = "block";
+		}else{
+			popup.style.display = "none";
+		}
+	  }
+	  
        
    </script>
 </html>

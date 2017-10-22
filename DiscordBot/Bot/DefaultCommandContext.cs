@@ -27,6 +27,10 @@ namespace DiscordBot.Bot {
             return ""+this.socket.Author.Id;
         }
 
+        public string GetSenderMeantion() {
+            return this.socket.Author.Mention;
+        }
+
         public void ReplyToChannel(string msg) {
             this.socket.Channel.SendMessageAsync(msg);
         }
