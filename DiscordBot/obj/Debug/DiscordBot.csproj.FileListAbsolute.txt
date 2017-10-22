@@ -24,3 +24,34 @@ c:\users\colin halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordB
 c:\users\colin halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\obj\Debug\DiscordBot.pdb
 C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\bin\Debug\ModuleCore.dll
 C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\bin\Debug\ModuleCore.pdb
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\DiscordBot.exe.config
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\DiscordBot.exe
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\DiscordBot.pdb
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\Discord.Net.Commands.dll
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\Discord.Net.Core.dll
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\Discord.Net.Rest.dll
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\Discord.Net.Rpc.dll
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\Discord.Net.Webhook.dll
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\Discord.Net.WebSocket.dll
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\ModuleCore.dll
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\System.Collections.Immutable.dll
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\System.Interactive.Async.dll
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\Discord.Net.Commands.xml
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\Discord.Net.Core.xml
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\Discord.Net.Rest.xml
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\Discord.Net.Rpc.xml
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\Discord.Net.Webhook.xml
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\Discord.Net.WebSocket.xml
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\Microsoft.Extensions.DependencyInjection.xml
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\ModuleCore.pdb
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\System.Collections.Immutable.xml
+C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\System.Interactive.Async.xml
+C:\Users\Monster\Documents\PowerBot\DiscordBot\obj\Debug\DiscordBot.csprojResolveAssemblyReference.cache
+C:\Users\Monster\Documents\PowerBot\DiscordBot\obj\Debug\DiscordBot.exe
+C:\Users\Monster\Documents\PowerBot\DiscordBot\obj\Debug\DiscordBot.pdb

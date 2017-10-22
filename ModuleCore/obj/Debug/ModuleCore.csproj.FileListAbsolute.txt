@@ -3,3 +3,8 @@ C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\ModuleCo
 C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\ModuleCore\obj\Debug\ModuleCore.csprojResolveAssemblyReference.cache
 C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\ModuleCore\obj\Debug\ModuleCore.dll
 C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\ModuleCore\obj\Debug\ModuleCore.pdb
+C:\Users\Monster\Documents\PowerBot\ModuleCore\bin\Debug\ModuleCore.dll
+C:\Users\Monster\Documents\PowerBot\ModuleCore\bin\Debug\ModuleCore.pdb
+C:\Users\Monster\Documents\PowerBot\ModuleCore\obj\Debug\ModuleCore.csprojResolveAssemblyReference.cache
+C:\Users\Monster\Documents\PowerBot\ModuleCore\obj\Debug\ModuleCore.dll
+C:\Users\Monster\Documents\PowerBot\ModuleCore\obj\Debug\ModuleCore.pdb
