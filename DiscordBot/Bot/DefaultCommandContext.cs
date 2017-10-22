@@ -27,7 +27,7 @@ namespace DiscordBot.Bot {
             return ""+this.socket.Author.Id;
         }
 
-        public string GetSenderMeantion() {
+        public string GetSenderMention() {
             return this.socket.Author.Mention;
         }
 
