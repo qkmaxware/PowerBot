@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Discord.WebSocket;
+using Discord.Audio;
 
 namespace DiscordBot.Bot {
     class DefaultCommandContext : ModuleCore.Modules.ICommandContext {

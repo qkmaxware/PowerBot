@@ -4,40 +4,53 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ModuleCore.Collections;
 using ModuleCore.Modules;
 using System.Timers;
+using System.Collections.Concurrent;
 
 namespace DiscordBot.Bot {
     class Scheduler {
 
+        private class ScheduledTask: Comparer<ScheduledTask> {
+            public IScheduledTask task;
+
+            public override int Compare(ScheduledTask x, ScheduledTask y){
+                return 0;
+            }
+        }
+
         private List<IScheduledTask> tasks = new List<IScheduledTask>();
-        private List<Timer> task_timers = new List<Timer>();
+        private Heap<ScheduledTask> queue;
 
-        public void Register(IScheduledTask task) {
-            if (tasks.Contains(task))
-                return;
-            //Add task
+        public Scheduler() {
+            queue = new Heap<ScheduledTask>(new ScheduledTask());
+        }
+
+        public void AddTask(IScheduledTask task) {
             tasks.Add(task);
-            //Add Timer
-            ScheduleTimer(task);
         }
 
-        void ScheduleTimer(IScheduledTask task) {
-            DateTime now = DateTime.Now;
-            DateTime fireAt = now.Add(task.GetRepeatTime());
-
-            double ticktime = task.GetRepeatTime().TotalMilliseconds;
-            Timer t = new Timer(ticktime);
-            t.Elapsed += new ElapsedEventHandler((object sender, ElapsedEventArgs e) => {
-                task.DoTask();
-            });
-            t.Start();
-            task_timers.Add(t);
+        public void RemoveTask(IScheduledTask task){
+            tasks.Remove(task);
         }
 
-        void Kill() {
-            foreach (Timer t in this.task_timers) {
-                t.Stop();
+        private void CheckTaskAndRun() {
+            DateTime time = DateTime.Now;
+
+            //No tasks, quit
+            if (queue.IsEmpty)
+                return;
+
+            //Do I have a task...if not quit
+            ScheduledTask scheduled = queue.First;
+
+            DateTime next = scheduled.task.GetNextScheduledTime();
+
+            //I am past my due date...do the task
+            if (time >= next) {
+                queue.PopFirst();
+                scheduled.task.DoTask();
             }
         }
 

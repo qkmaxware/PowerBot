@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ModuleCore.Modules {
     public interface IScheduledTask {
-        TimeSpan GetRepeatTime();
+        DateTime GetNextScheduledTime();
         void DoTask();
     }
 }

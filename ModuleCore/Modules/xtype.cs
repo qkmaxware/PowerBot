@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace ModuleCore.Modules {
     public sealed class xtype {
-        private static Regex rules = new Regex("[a-zA-Z\\-]+");
+        private static Regex rules = new Regex("[a-zA-Z0-9\\-]+");
 
         public string Value {
             get;
@@ -24,6 +24,10 @@ namespace ModuleCore.Modules {
             xtype type = new Modules.xtype();
             type.Value = match;
             return type;
+        }
+
+        public override string ToString() {
+            return Value.ToString();
         }
 
         public override bool Equals(object obj) {

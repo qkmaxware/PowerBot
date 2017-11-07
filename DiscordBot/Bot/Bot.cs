@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Discord;
+using Discord.Audio;
 using Discord.WebSocket;
 using System.Text.RegularExpressions;
 
@@ -12,19 +14,63 @@ namespace DiscordBot.Bot {
 
         private DiscordSocketClient client;
         private BotConfig config;
-        public readonly ModuleOperationsMatrix modManager = new ModuleOperationsMatrix();
+        public readonly ModuleManager modManager = new ModuleManager();
 
         private static Regex firstWordOnly = new Regex("^.+?(?:\\s|$)");
         private Logger logger;
 
         public Bot(BotConfig config, Logger logger) {
-            client = new DiscordSocketClient(new DiscordSocketConfig {
-
-            });
+            DiscordSocketConfig socketConfig = new DiscordSocketConfig {
+            };
+            
+            client = new DiscordSocketClient(socketConfig);
 
             this.logger = logger;
+            this.config = config;
+
+            //Logging
             client.Log += logger.Log;
-            this.config = config; 
+
+            //Connection
+            client.Disconnected += OnDisconnected;
+            client.Connected += OnConnected;
+            client.Ready += OnReady;
+
+            //Message reading
+            client.MessageReceived += Read;
+        }
+
+        private Task OnReady(){
+            return Task.Delay(0);
+        }
+
+        private Task OnConnected(){
+            return Task.Delay(0);
+        }
+
+        private Task OnDisconnected(Exception exp){
+            return Task.Delay(0);
+        }
+
+        private async Task JoinAudioChannel(IVoiceChannel channel) {
+            if (channel == null)
+                return;
+
+            IAudioClient voip = await channel.ConnectAsync();
+        }
+
+        private StreamDefinition CreateStream() {
+            StreamDefinition def = new StreamDefinition();
+
+            return def;
+        }
+
+        private async Task SendStreamAsync(IAudioClient client, StreamDefinition stream) {
+
+        }
+
+        private async Task DisconnectAudioChannel(IAudioClient voip) {
+            await voip.StopAsync();
         }
 
         private async Task Read(SocketMessage msg) {
@@ -47,6 +93,8 @@ namespace DiscordBot.Bot {
 
                     if (first.Length != 0) {
                         //Define context variables (sender ect)
+                        //SocketGuild guild = client.Guilds.FirstOrDefault(g => g.Name == message.Author.);
+                        //IVoiceChannel vc = guild.VoiceChannels.FirstOrDefault(t => t.Name == voiceChannelName);
                         DefaultCommandContext ctx = new DefaultCommandContext(msg, remainder);
 
                         //Get the mod.name
@@ -57,10 +105,9 @@ namespace DiscordBot.Bot {
                             mod = func;
                             func = string.Join(".", parts.Skip(1));
                         }
-
-                        List<KeyValuePair<ModuleCore.Modules.IModule, ModuleCore.Modules.ICommand>> cmds;
+                        
                         ModuleCore.Modules.xtype function = ModuleCore.Modules.xtype.Register(func);
-                        modManager.GetCommand(out cmds, function);
+                        List<ModuleManager.CommandInfo> cmds = modManager.GetCommandsForXtype(function);
 
                         //No command
                         if (cmds == null || cmds.Count == 0) {
@@ -73,9 +120,9 @@ namespace DiscordBot.Bot {
                             //Multiple commands, Match module
                             if (mod != null) {
                                 ModuleCore.Modules.ICommand c = null;
-                                foreach (KeyValuePair<ModuleCore.Modules.IModule, ModuleCore.Modules.ICommand> p in cmds) {
-                                    if (p.Key.GetModuleName().Value == mod) {
-                                        c = p.Value;
+                                foreach (ModuleManager.CommandInfo p in cmds) {
+                                    if (p.mod.GetModuleName().Value == mod) {
+                                        c = p.cmd;
                                         break;
                                     }
                                 }
@@ -96,7 +143,7 @@ namespace DiscordBot.Bot {
 
                         if (cmds.Count == 1) {
                             //One Command, call it
-                            cmd = cmds[0].Value;
+                            cmd = cmds[0].cmd;
                         }
 
                         //Run the command
@@ -111,27 +158,16 @@ namespace DiscordBot.Bot {
             }
         }
 
-        private async Task InitBot() {
-            client.MessageReceived += Read;
-        }
-
-        public async Task Connect() {
-            await InitBot();
+        public async Task Connect(CancellationTokenSource token) {
 
             //Login and connect
+            await client.SetGameAsync("Nothing...");
             await client.LoginAsync(TokenType.Bot, config.authentication.token);
             await client.StartAsync();
 
-            //Wait indefinitely
-            await Task.Delay(-1);
-        }
+            //Wait indefinitely until cancelled
+            while (!token.Token.IsCancellationRequested) { }
 
-        private void ReplyOnChannel(ISocketMessageChannel channel, string content) {
-            channel.SendMessageAsync(content);
-        }
-
-        private void SendMessageToUser(ulong userid, string content) {
-            client.GetUser(userid).SendMessageAsync(content);
         }
 
     }

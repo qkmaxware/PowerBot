@@ -1,5 +1,4 @@
 c:\users\colin halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\bin\Debug\DiscordBot.exe.config
-c:\users\colin halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\obj\Debug\DiscordBot.csprojResolveAssemblyReference.cache
 c:\users\colin halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\bin\Debug\DiscordBot.exe
 c:\users\colin halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\bin\Debug\DiscordBot.pdb
 c:\users\colin halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\bin\Debug\Discord.Net.Commands.dll
@@ -55,3 +54,41 @@ C:\Users\Monster\Documents\PowerBot\DiscordBot\bin\Debug\System.Interactive.Asyn
 C:\Users\Monster\Documents\PowerBot\DiscordBot\obj\Debug\DiscordBot.csprojResolveAssemblyReference.cache
 C:\Users\Monster\Documents\PowerBot\DiscordBot\obj\Debug\DiscordBot.exe
 C:\Users\Monster\Documents\PowerBot\DiscordBot\obj\Debug\DiscordBot.pdb
+C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\bin\Debug\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\bin\Debug\Microsoft.Extensions.DependencyInjection.xml
+C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
+C:\Users\Colin Halseth\documents\visual studio 2015\Projects\DiscordBot\DiscordBot\obj\Debug\DiscordBot.csprojResolveAssemblyReference.cache
+D:\Visual Studio 2015\DiscordBot\DiscordBot\obj\Debug\DiscordBot.csprojResolveAssemblyReference.cache
+D:\Visual Studio 2015\DiscordBot\DiscordBot\obj\Debug\DiscordBot.csproj.CoreCompileInputs.cache
+D:\Visual Studio 2015\DiscordBot\DiscordBot\obj\Debug\DiscordBot.exe
+D:\Visual Studio 2015\DiscordBot\DiscordBot\obj\Debug\DiscordBot.pdb
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\DiscordBot.exe.config
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\DiscordBot.exe
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\DiscordBot.pdb
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\Discord.Net.Commands.dll
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\Discord.Net.Core.dll
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\Discord.Net.Rest.dll
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\Discord.Net.Rpc.dll
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\Discord.Net.Webhook.dll
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\Discord.Net.WebSocket.dll
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\Microsoft.Extensions.DependencyInjection.dll
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\ModuleCore.dll
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\Newtonsoft.Json.dll
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\System.Collections.Immutable.dll
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\System.Interactive.Async.dll
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\Discord.Net.Commands.xml
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\Discord.Net.Core.xml
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\Discord.Net.Rest.xml
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\Discord.Net.Rpc.xml
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\Discord.Net.Webhook.xml
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\Discord.Net.WebSocket.xml
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\Microsoft.Extensions.DependencyInjection.xml
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\ModuleCore.pdb
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\Newtonsoft.Json.xml
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\System.Collections.Immutable.xml
+D:\Visual Studio 2015\DiscordBot\DiscordBot\bin\Debug\System.Interactive.Async.xml

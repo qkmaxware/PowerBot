@@ -40,6 +40,6 @@ namespace DiscordBot.Bot {
         /// Bot authentification settings
         /// </summary>
         public Authentication authentication = new Authentication();
-
+        public uint networkPort = 8081;
     }
 }

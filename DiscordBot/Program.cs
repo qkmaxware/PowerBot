@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using DiscordBot.Bot;
@@ -43,7 +44,7 @@ namespace DiscordBot {
         static void Debug() {
             //Print header
             Console.WriteLine("----------------------------------------");
-            Console.WriteLine("PowerBot 2016. Press esc at any point to halt program.");
+            Console.WriteLine("PowerBot 2017. Press esc at any point to halt program.");
             Console.WriteLine("----------------------------------------\n");
 
             //Create default JSON
@@ -61,19 +62,25 @@ namespace DiscordBot {
             //Install the mods
             //Default mods first
             Bot.DefaultModules.EchoModule echo = new Bot.DefaultModules.EchoModule();
-            bot.modManager.Install(echo);
-            Bot.DefaultModules.TaskModule taskmgr = new Bot.DefaultModules.TaskModule();
-            bot.modManager.Install(taskmgr);
+            bot.modManager.AddModule(echo, true);
+            //Bot.DefaultModules.TaskModule taskmgr = new Bot.DefaultModules.TaskModule();
+            //bot.modManager.AddModule(taskmgr, true);
+            Bot.DefaultModules.ChanceModule chance = new Bot.DefaultModules.ChanceModule();
+            bot.modManager.AddModule(chance, true);
 
-            //Initialize the webserver
-            SimpleWebServer.WebServer web = new SimpleWebServer.WebServer(logger, "http://localhost", 8081);
+            //Initialize the webserver and web-pages
+            SimpleWebServer.WebServer web = new SimpleWebServer.WebServer(logger, "http://localhost", config.networkPort);
             TemplateWebPage index = new TemplateWebPage("Web/index.html");
             index.SetReplacementMethod((string val) => {
                 if (val == "modules") {
-                    ModuleInstallInfo[] mods = bot.modManager.getInstalled();
+                    ModuleCore.Modules.IModule[] mods = bot.modManager.GetAvailableMods();
+                    ModuleCore.Modules.IModule[] installed = bot.modManager.GetInstalledMods();
                     string[] replace = new string[mods.Length];
                     for (int i = 0; i < mods.Length; i++) {
-                        string s = "{name:\"" + mods[i].name + "\",uid:" + mods[i].uid + ",enabled:"+(mods[i].enabled ? "true" : "false")+"}";
+                        string s = "{name:\"" 
+                            + mods[i].GetModuleName() 
+                            + "\",uid:" + mods[i].GetUid() 
+                            + ",enabled:"+(installed.Contains(mods[i]) ? "true" : "false")+"}";
                         replace[i] = s;
                     }
                     return string.Join(",", replace);
@@ -89,27 +96,34 @@ namespace DiscordBot {
                 string op = args["func"];
                 switch (op) {
                     case "toggleMods":
-                        ModuleInstallInfo[] mods = bot.modManager.getInstalled();
+                        ModuleCore.Modules.IModule[] mods = bot.modManager.GetAvailableMods();
                         bool success = true;
-                        foreach (ModuleInstallInfo info in mods) {
-                            string modid = info.identity;
-                            if (!args.ContainsKey(modid))
-                                continue;
-                            string enabler = args[modid];
-                            bool isEnabled;
-                            bool parsed = bool.TryParse(enabler, out isEnabled);
-                            if (parsed) {
-                                bot.modManager.Enable(info.name, info.uid, isEnabled);
+                        foreach (ModuleCore.Modules.IModule info in mods) {
+                                string modid = info.GetModuleName().Value + "#" + info.GetUid();
+                                string enabler = args[modid];
+                                bool isEnabled;
+                                bool parsed = bool.TryParse(enabler, out isEnabled);
+                                if (parsed) {
+                                    bot.modManager.EnableMod(info, isEnabled);
+                                }
+                                else {
+                                    success = false;
+                                }
                             }
-                            else {
-                                success = false;
+                            return "{\"error\":"+!success+", \"message\":\""+(success ? "All mods have been updated." : "An error occured, some mods may not have been updated.")+"\"}";
+                        case "getModDesc":
+                            mods = bot.modManager.GetAvailableMods();
+                            string mod = args["mod"].Trim();
+                            foreach (ModuleCore.Modules.IModule info in mods) {
+                                string modid = info.GetModuleName().Value + "#" + info.GetUid();
+                                if (mod == modid) {
+                                    return "{\"error\":" + false + ", \"message\":\""+ info.GetDescription() + "\"}";
+                                }
                             }
-                        }
-                        return "{\"error\":"+success+", \"message\":\""+(success ? "All mods have been updated." : "An error occured, some mods may not have been updated.")+"\"}";
-                    default:
-                        return "{\"error\":true, \"message\":\"This function does not exist.\"}";
-                }
-                return "{\"error\":true, \"message\":\"This function does not exist.\"}";
+                            return "{\"error\":" + true + ", \"message\":\"" + "that module does not exist" + "\"}";
+                        default:
+                            return "{\"error\":true, \"message\":\"This function does not exist.\"}";
+                    }
             });
             web.AddPage("index", index);
             web.AddPage("rest", api);
@@ -117,14 +131,18 @@ namespace DiscordBot {
             web.Start();
 
             //Listen asynchronously
-            Task t = bot.Connect(); //.GetAwaiter().GetResult();
+            CancellationTokenSource cancel = new CancellationTokenSource();
+            Task t = bot.Connect(cancel); //.GetAwaiter().GetResult();
 
             //Wait until told otherwise
             while (true) {
                 if (Console.ReadKey().Key == ConsoleKey.Escape)
                     break;
             }
+
+            //Cancel everything
             web.Stop();
+            cancel.Cancel();
 
         }
 

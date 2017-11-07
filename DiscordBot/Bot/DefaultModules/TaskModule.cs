@@ -10,29 +10,6 @@ using FlatFileDatabase;
 namespace DiscordBot.Bot.DefaultModules {
     class TaskModule : IModule {
 
-        private class Command : ICommand {
-            private xtype name;
-            private string desc;
-            Action<ICommandContext> action;
-            public Command(string name, Action<ICommandContext> action, string desc="Manages a scheduled event.") {
-                this.name = xtype.Register(name);
-                this.action = action;
-                this.desc = desc;
-            }
-
-            public string GetHelp() {
-                return desc;
-            }
-
-            public xtype GetName() {
-                return name;
-            }
-
-            public void Run(ICommandContext ctx) {
-                action.Invoke(ctx);
-            }
-        }
-
         private class TimedChecker : IScheduledTask {
             private Database db;
             public TimedChecker(Database db) {
@@ -45,7 +22,7 @@ namespace DiscordBot.Bot.DefaultModules {
                 //Table table = db.Query(check);
             }
 
-            public TimeSpan GetRepeatTime() {
+            public TimeSpan GetNextTime() {
                 //5 min repeat
                 return new TimeSpan(0, 5, 0);
             }

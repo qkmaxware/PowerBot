@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\Heap.cs" />
     <Compile Include="Modules\ICommand.cs" />
     <Compile Include="Modules\ICommandContext.cs" />
     <Compile Include="Modules\IModule.cs" />
